@@ -9,7 +9,7 @@ export default function Hero() {
 
       <p className="hero--text">
         In this exclusive place we'll launch super exclusive items for a super
-        exclusive price...exclucively
+        exclusive price...exclusively
       </p>
     </section>
   );

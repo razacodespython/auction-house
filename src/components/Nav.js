@@ -26,7 +26,7 @@ export default function Nav() {
         <ConnectWallet />
       </ThirdwebProvider>
 
-      <img src={star} className="nav--logo" />
+      {/* <img src={star} className="nav--logo" /> */}
     </nav>
   );
 }

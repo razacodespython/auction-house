@@ -43,12 +43,12 @@ export default function Card(props) {
     return bUrl.asset.image.replace("ipfs://", "");
   });
 
-  // function buyNow(listId) {
-  //   market.buyoutDirectListing({
-  //     listingId: listId,
-  //     quantityDesired: 1,
-  //   });
-  // }
+  function buyNow(listId) {
+    return market.buyoutDirectListing({
+      listingId: listId,
+      quantityDesired: 1,
+    });
+  }
 
   //   const buyNow = useCallback(
   //     async (listId) => {
@@ -61,47 +61,62 @@ export default function Card(props) {
   //   );
 
   return (
-    <div className="card">
-      <img
-        src={`https://ipfs.thirdweb.com/ipfs/${balURL[0]}`}
-        className="card--image"
-      />
-      <div className="card--stats">
+    <div>
+      <div className="card">
+        <div className="card--one">
+          <img
+            src={`https://ipfs.thirdweb.com/ipfs/${balURL[0]}`}
+            className="card--image"
+          />
+          <button className="btn" onClick={buyNow.bind(this, 0)}>
+            BUY NOW
+          </button>
+        </div>
+        <div className="card--two">
+          <img
+            src={`https://ipfs.thirdweb.com/ipfs/${balURL[1]}`}
+            className="card--image"
+          />
+
+          <button className="btn" onClick={buyNow.bind(this, 1)}>
+            BUY NOW
+          </button>
+        </div>
+        <div className="card--three">
+          <img
+            src={`https://ipfs.thirdweb.com/ipfs/${balURL[2]}`}
+            className="card--image"
+          />
+
+          <button className="btn" onClick={buyNow.bind(this, 2)}>
+            BUY NOW
+          </button>
+        </div>
+      </div>
+
+
+
+      
+      {/* <div className="card--stats">
         <span className="gray">{`Token ID: ${balanceId[0]}`} • </span>
         <span className="gray">1.0 Eth</span>
       </div>
       <p className="description"></p>
-      {/* <button className="btn" onClick={buyNow(0)}>
-        BUY NOW
-      </button> */}
 
-      <img
-        src={`https://ipfs.thirdweb.com/ipfs/${balURL[1]}`}
-        className="card--image"
-      />
       <div className="card--stats">
         <span className="gray">{`Token ID: ${balanceId[1]}`} • </span>
         <span className="gray">1.0 Eth</span>
       </div>
       <p className="description"></p>
-      {/* <button className="btn" onClick={buyNow(1)}>
-        BUY NOW
-      </button> */}
 
-      <img
-        src={`https://ipfs.thirdweb.com/ipfs/${balURL[2]}`}
-        className="card--image"
-      />
       <div className="card--stats">
         <span className="gray">{`Token ID: ${balanceId[2]}`} • </span>
         <span className="gray">1.0 Eth</span>
       </div>
       <p className="description"></p>
-      {/* <button className="btn" onClick={buyNow(2)}>
-        BUY NOW
-      </button> */}
+
       <input />
-      <button className="btn--offer">MAKE AN OFFER</button>
+      <button className="btn--offer">MAKE AN OFFER</button> */}
     </div>
   );
 }

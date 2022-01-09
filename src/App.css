@@ -1,6 +1,6 @@
-* {
+/* * {
   box-sizing: border-box;
-}
+} */
 
 body {
   margin: 0;
@@ -9,6 +9,7 @@ body {
 nav {
   height: 70px;
   display: flex;
+  justify-content: start;
   padding: 20px 36px;
   box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.1);
 }
@@ -46,40 +47,44 @@ section {
 }
 
 .card {
-  width: 175 px;
+  display: flex;
+  justify-content: space-around;
   font-size: 12px;
   padding: 10px;
-  align-self: center;
 }
 
 .card--image {
-  display: flex;
-  width: 25%;
   border-radius: 9px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
-.card--stats {
+/* .card--stats {
   display: flex;
+  flex-direction: row;
 }
 
 .description {
   font-size: larger;
-}
+} */
 
 .btn {
+  display: flex;
+  justify-content: space-around;
   padding: 10px 20px;
   background-color: rgb(43, 91, 139);
   border: 1px solid #ddd;
   border-radius: 5px;
   color: white;
   cursor: pointer;
+  width: 100%;
 }
 
-.btn--offer {
+/* .btn--offer {
   padding: 10px 20px;
   background-color: rgb(43, 139, 51);
   border: 1px solid #ddd;
   border-radius: 5px;
   color: white;
   cursor: pointer;
-}
+} */
