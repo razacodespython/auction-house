@@ -4,6 +4,7 @@ import AuctionListing from "./AuctionListing";
 import { useWeb3 } from "@3rdweb/hooks";
 import { useCallback, useMemo, useEffect, useState } from "react";
 import { ThirdwebSDK } from "@3rdweb/sdk";
+import { BigNumber } from "ethers";
 
 export default function Card(props) {
   const { provider } = useWeb3();
@@ -43,6 +44,10 @@ export default function Card(props) {
     return bUrl.asset.image.replace("ipfs://", "");
   });
 
+  const balanceQ = balance.map((balQ) => {
+    return BigNumber.from(balQ.quantity);
+  });
+
   function buyNow(listId) {
     return market.buyoutDirectListing({
       listingId: listId,
@@ -59,6 +64,13 @@ export default function Card(props) {
   //     },
   //     [market]
   //   );
+  console.log(balanceQ[0]);
+
+  let balanceQfirst = balanceQ[0];
+
+  console.log(balanceQ[0]._hex === "0x00");
+  console.log(balanceQ[1]._hex === "0x00");
+  console.log(balanceQ[2]._hex === "0x00");
 
   return (
     <div>
@@ -68,35 +80,53 @@ export default function Card(props) {
             src={`https://ipfs.thirdweb.com/ipfs/${balURL[0]}`}
             className="card--image"
           />
-          <button className="btn" onClick={buyNow.bind(this, 0)}>
-            BUY NOW
-          </button>
+          {balanceQfirst._hex === "0x00" ? (
+            <div className="card--badge">SOLD OUT</div>
+          ) : (
+            <div className="card--badge">
+              FOR SALE
+              <button className="btn" onClick={buyNow.bind(this, 0)}>
+                BUY NOW
+              </button>
+            </div>
+          )}
         </div>
         <div className="card--two">
           <img
             src={`https://ipfs.thirdweb.com/ipfs/${balURL[1]}`}
             className="card--image"
           />
-
-          <button className="btn" onClick={buyNow.bind(this, 1)}>
-            BUY NOW
-          </button>
+          {balanceQ[1]._hex === "0x00" ? (
+            <div className="card--badge">SOLD OUT</div>
+          ) : (
+            <div className="card--badge">
+              FOR SALE
+              <button className="btn" onClick={buyNow.bind(this, 1)}>
+                BUY NOW
+              </button>
+            </div>
+          )}
         </div>
+
         <div className="card--three">
           <img
             src={`https://ipfs.thirdweb.com/ipfs/${balURL[2]}`}
             className="card--image"
           />
 
-          <button className="btn" onClick={buyNow.bind(this, 2)}>
-            BUY NOW
-          </button>
+          {balanceQ[2]._hex === "0x00" ? (
+            <div className="card--badge">SOLD OUT</div>
+          ) : (
+            <div className="card--badge">
+              FOR SALE
+              <button className="btn" onClick={buyNow.bind(this, 2)}>
+                BUY NOW
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
-
-
-      
       {/* <div className="card--stats">
         <span className="gray">{`Token ID: ${balanceId[0]}`} • </span>
         <span className="gray">1.0 Eth</span>
@@ -117,6 +147,8 @@ export default function Card(props) {
 
       <input />
       <button className="btn--offer">MAKE AN OFFER</button> */}
+
+      {/* <p>My Listing: {JSON.stringify(balanceQfirst)}</p> */}
     </div>
   );
 }
