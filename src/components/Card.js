@@ -19,6 +19,7 @@ export default function Card(props) {
     [sdk]
   );
 
+  const [quantities, setQuantities] = useState([]);
   const [balance, setBalance] = useState([]);
 
   useEffect(() => {
@@ -32,21 +33,34 @@ export default function Card(props) {
     }
   }, [market]);
 
-  console.log(balance);
-
   const balanceId = balance.map((balId) => {
     return balId.id;
   });
-
-  console.log(balanceId);
 
   const balURL = balance.map((bUrl) => {
     return bUrl.asset.image.replace("ipfs://", "");
   });
 
-  const balanceQ = balance.map((balQ) => {
-    return BigNumber.from(balQ.quantity);
-  });
+  // const balanceQ = balance.map(async (balQ) => {
+
+  //   return balQ.quantity.toNumber();
+  // });
+
+  useEffect(() => {
+    const getQuantities = async () => {
+      const data = balance.map(async (balQ) => {
+        return balQ.quantity.toNumber();
+      });
+
+      const allQuantities = await Promise.all(data);
+      console.log(allQuantities);
+      setQuantities(allQuantities);
+    };
+
+    if (balance) {
+      getQuantities();
+    }
+  }, [balance]);
 
   function buyNow(listId) {
     return market.buyoutDirectListing({
@@ -64,67 +78,35 @@ export default function Card(props) {
   //     },
   //     [market]
   //   );
-  console.log(balanceQ[0]);
+  // console.log(balanceQ[0]);
 
-  let balanceQfirst = balanceQ[0];
+  // let balanceQfirst = balanceQ[0];
 
-  console.log(balanceQ[0]._hex === "0x00");
-  console.log(balanceQ[1]._hex === "0x00");
-  console.log(balanceQ[2]._hex === "0x00");
+  // console.log(balanceQ[0]._hex === "0x00");
+  // console.log(balanceQ[1]._hex === "0x00");
+  // console.log(balanceQ[2]._hex === "0x00");
 
   return (
     <div>
       <div className="card">
-        <div className="card--one">
-          <img
-            src={`https://ipfs.thirdweb.com/ipfs/${balURL[0]}`}
-            className="card--image"
-          />
-          {balanceQfirst._hex === "0x00" ? (
-            <div className="card--badge">SOLD OUT</div>
-          ) : (
-            <div className="card--badge">
-              FOR SALE
-              <button className="btn" onClick={buyNow.bind(this, 0)}>
-                BUY NOW
-              </button>
-            </div>
-          )}
-        </div>
-        <div className="card--two">
-          <img
-            src={`https://ipfs.thirdweb.com/ipfs/${balURL[1]}`}
-            className="card--image"
-          />
-          {balanceQ[1]._hex === "0x00" ? (
-            <div className="card--badge">SOLD OUT</div>
-          ) : (
-            <div className="card--badge">
-              FOR SALE
-              <button className="btn" onClick={buyNow.bind(this, 1)}>
-                BUY NOW
-              </button>
-            </div>
-          )}
-        </div>
-
-        <div className="card--three">
-          <img
-            src={`https://ipfs.thirdweb.com/ipfs/${balURL[2]}`}
-            className="card--image"
-          />
-
-          {balanceQ[2]._hex === "0x00" ? (
-            <div className="card--badge">SOLD OUT</div>
-          ) : (
-            <div className="card--badge">
-              FOR SALE
-              <button className="btn" onClick={buyNow.bind(this, 2)}>
-                BUY NOW
-              </button>
-            </div>
-          )}
-        </div>
+        {quantities.map((quantity, index) => (
+          <div>
+            <img
+              src={`https://ipfs.thirdweb.com/ipfs/${balURL[index]}`}
+              className="card--image"
+            />
+            {quantity === 0 ? (
+              <div className="card--badge">SOLD OUT</div>
+            ) : (
+              <div className="card--badge">
+                FOR SALE
+                <button className="btn" onClick={buyNow.bind(this, 0)}>
+                  BUY NOW
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
 
       {/* <div className="card--stats">
